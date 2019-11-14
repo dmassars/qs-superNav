@@ -1,0 +1,49 @@
+.sp-replacer {
+    overflow: inherit;
+    margin: 0;
+    width: 40px;
+    padding: 0;
+    border: 1px solid #b3b3b3;
+    border-color: #b3b3b3 !important; 
+    border-right-width: 0px !important;
+    background: #f2f2f280 !important; 
+
+    .sp-preview {
+        width: 80%;
+        height: 80%;
+        border: none;
+        top: 10%;
+        left: 10%;
+
+        .sp-preview-inner {
+            border: 1px solid #b3b3b3;
+        }
+    }
+    .sp-dd {
+        display: none;
+    }
+}
+
+.qv-object-navmenu-extension {
+    @import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+    @import 'bootstrapNavBar.scss';
+}
+
+.qv-mode-edit {
+    .navbar-nav {
+        li a {
+            cursor: not-allowed !important;
+        }
+    }
+}
+
+.qv-object-navMenu {
+    
+    .qv-object-nav.inline {
+        display: none !important;
+    }
+      
+    .qv-inner-object {
+        overflow: visible !important;
+    }
+}

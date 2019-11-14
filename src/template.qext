@@ -1,0 +1,8 @@
+{
+  "name" : "Super Nav",
+  "description" : "Nav Menu Extension",
+  "icon" : "extension",
+  "type" : "visualization",
+  "version": "0.1",
+  "author": "Daniel Massarsky <daniel.massarsky@qlik.com>"
+}

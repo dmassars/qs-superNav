@@ -1,0 +1,32 @@
+<div class="qv-object-supernav-extension">
+    <div class="ui menu small top-menu" ng-stylez="{'background-color':topNav.backgroundColor.color, color: topNav.fontColor.color}">
+        <div class="header item">
+            <span class="lui-icon" ng-if="sideNav.enabled" ng-click="toggleSideFilterMenu()" style="padding-right: 10px; font-size: 16px"
+                ng-class="{'lui-icon--handle':!menuIsOpen, 'lui-icon--handle-horizontal': menuIsOpen }"
+                aria-hidden="true"></span> 
+            {{topNav.label}}
+        </div>
+            <div style="width: 70%; display: flex">
+
+                <div ng-repeat="link in sections.top track by link.cId" ng-if="link.$show" class="item ui sheet-link"
+                    ng-class="{active: activeSheetId() == link.selectedSheet, dropdown: link.isDropdown }" ng-click="link.go()"
+                    sheetid="{{link.selectedSheet}}" id="{{link.cId}}"  ng-init="link.children.length && initializeDropdown(link.cId)" >{{link.label}}
+                    
+                    <div class="menu">
+                        <a ng-repeat="linkChild in link.children track by linkChild.cId" ng-if="linkChild.$show" class="item ui sheet-link"
+                        ng-class="{active: activeSheetId() == linkChild.selectedSheet  || link.isActiveSheet, dropdown: linkChild.isDropdown }" ng-click="linkChild.go()"
+                        sheetid="{{linkChild.selectedSheet}}" id="{{linkChild.cId}}">{{linkChild.label}}</a>
+                    </div>
+
+                </div>
+            </div>
+        <div class="right menu">
+            <div class="item" ng-if="qlikNavigation.isModeAllowed('edit') && !appIsPublished" ng-click="toggleEditMode()" ng-class="{active: qlikNavigation.getMode() == 'edit'}" style="padding: 0px">
+                Edit
+            </div>
+            <div class="item" ng-click="toggleQlikHeaderMenu()" style="padding: 0px">
+                <img ng-if="topNav.image.isUsed && topNav.image.url.qStaticContentUrl.qUrl.length" style="width: 35px" class="ui mini image" ng-src="{{topNav.image.url.qStaticContentUrl.qUrl}}">
+            </div>
+        </div>
+    </div>
+</div>
