@@ -10,7 +10,7 @@ import {get as _get} from 'lodash'
 var sideMenuTemplate = angular.element(require('./templates/sideNav.html'))
 var topMenuTemplate = angular.element(require('./templates/topNav.html'))
 
-export const controller = ($rootScope, $scope, $element, $timeout, $compile) => {
+export const controller = function($rootScope, $scope, $element, $timeout, $compile){
     _scope = $rootScope;
     _timeout = $timeout;
 
