@@ -27,8 +27,8 @@ define([], function() {
 
 if (module.hot) {
 	// hot-reloading used during development
-	module.hot.accept('./templates/sideNav.html',()=> {
-		var _template = require('./templates/sideNav.html');
+	module.hot.accept('./templates/topNav.html',()=> {
+		var _template = require('./templates/topNav.html');
 		// window._template = _template;
 		if ($element){
 			// $('.qv-object-supernav-extension').remove()
