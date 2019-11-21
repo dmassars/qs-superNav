@@ -4,7 +4,7 @@
   "description": "SuperNav Qlik Sense Extension",
   "main": "index.js",
   "scripts": {
-    "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server --env.PORT=8086 --env.development --env.build_output=build --progress",
+    "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server --env.development --progress",
     "build": "node node_modules/webpack/bin/webpack.js -p --env.production --progress --colors"
   },
   "keywords": [],
@@ -45,14 +45,12 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^3.3.7",
     "bootstrap-accessibility-plugin": "^1.0.6",
     "bootstrap-sass": "^3.3.7",
     "leonardo-ui": "^1.6.0",
     "lodash": "^4.17.10",
-    "node-watch": "^0.6.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-sass": "^2.4.2"
   }
