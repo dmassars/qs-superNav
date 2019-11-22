@@ -41,10 +41,6 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
         var object = $('#single-object').length && $('#single-object') || $('.qv-panel-wrap')
         object.prepend($compile(topMenuTemplate)($$scope))
 
-        $$scope.menuWidth = '12rem'
-        $$scope.menuStyle = {
-            width: `${$$scope.menuWidth}px`
-        }
 
         $$scope.menuIsOpen = false
         $$scope.$menu = $('.left-menu')
@@ -75,11 +71,11 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
             const push = _get($scope,'layout.props.sideNav.push',true)
             $('.left-menu').removeClass('menu-open')
             $$scope.menuIsOpen = false
-            push && $('.qv-panel, .qs-header').removeClass('menu-open push')
+            push && $('#qs-page-container, .qs-header').removeClass('menu-open push')
 
             setTimeout(()=>{
                 qlik.resize()
-            },75)
+            },320)
 
         }
 
@@ -88,11 +84,11 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
             $('.left-menu').addClass('menu-open')
             $$scope.menuIsOpen = true
             setActiveSheet()
-            push && $('.qv-panel, .qs-header').addClass('menu-open push')
+            push && $('#qs-page-container, .qs-header').addClass('menu-open push')
 
             setTimeout(()=>{
                 qlik.resize()
-            },75)
+            },320)
 
         }
         

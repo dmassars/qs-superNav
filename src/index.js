@@ -8,7 +8,7 @@ define([], function() {
 
 	return {
 		template: `
-		<div class="message" style="background: #202a53; color: white;">
+		<div class="message">
 			<div>SUPER NAV Placeholder</div>
 		</div>
 		`,

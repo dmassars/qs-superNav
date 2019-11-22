@@ -4,22 +4,33 @@ sans-serif;
 $icons-font-path: '../../node_modules/semantic-ui-sass/icons' !default;
 $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 
-$left-nav-width: 12rem;
+$left-nav-width: 15rem;
 
-.qv-mode-edit.qv-object-superNav .message {
-  display: 'inline' !important;
-  height: 100%;
+.qv-object-superNav {
+  &.qv-mode-edit .message {
+    color: #202a53;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-size: x-large;
+    justify-content: center;
+  }
+
+  &:not(.qv-mode-edit) {
+    display: none;
+  }
 }
 
-.qv-object-superNav:not(.qv-mode-edit) .message {
-  display: none;
+.qs-header,
+#qs-page-container {
+  width: 100%
 }
 
 .menu-open.push {
-  // transition: width 0.1s cubic-bezier(0.54, 0.01, 0.57, 1.03) 0s;
-  margin-left: #{$left-nav-width};
   width: calc(100% - #{$left-nav-width}) !important;
-  // float: right;
+  transition: width .2s linear;
+  float: right;
 }
 
 [tid='buttons'] {
@@ -67,18 +78,21 @@ $left-nav-width: 12rem;
   .left-menu {
     width: $left-nav-width !important;
     top: 42.44px !important;
-    left: -$left-nav-width;
     position: fixed;
     height: 100%;
 
+    background-color: white;
+    position: fixed;
+    overflow: hidden;
+    z-index: 10;
+
     &.menu-open {
-      transform: translateX(100%);
-      visibility: visible;
+      left: 0rem;
+      transition: left .2s linear;
     }
 
     &:not(.menu-open) {
-      transform: translateX(0%);
-      visibility: hidden;
+      left: -$left-nav-width;
     }
   }
 
@@ -241,14 +255,6 @@ $left-nav-width: 12rem;
 
   .selected {
     background-color: rgb(18, 209, 234);
-  }
-
-  .slide-menu {
-    background-color: white;
-    visibility: hidden;
-    position: fixed;
-    overflow: hidden;
-    z-index: 10;
   }
 
 
