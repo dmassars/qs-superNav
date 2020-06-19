@@ -1,6 +1,6 @@
 {
   "name": "supernav-qliksense-extension",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "SuperNav Qlik Sense Extension",
   "main": "index.js",
   "scripts": {
