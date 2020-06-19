@@ -28,15 +28,53 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
 
     var qlikTopToolbarVisible = true
     $('.qv-panel').addClass('qlik-toolbar-visible')
+    $('body').addClass('supernav-extension-active qlik-toolbar-visible')
 
     function hideExtension(){
         $('.qv-panel, .qs-header').removeClass('menu-open push')
+        $$scope.closeSideFilterMenu()
+        $('body').removeClass('supernav-extension-active')
         $('.qv-object-supernav-extension').hide()
     }
 
-    if (!window.$snscope) {
+    
+    $$scope.toggleSideFilterMenu = function () {
+        if ($$scope.menuIsOpen) $$scope.closeSideFilterMenu()
+        else $$scope.openSideFilterMenu()
+    }
 
-        // $('body').prepend($compile(sideMenuTemplate)($$scope))
+    function setActiveSheet(sheetId) {
+        $('#sheet-links .item.active').removeClass('active')
+        if (!sheetId) sheetId = $$scope.activeSheetId()
+        $(`#sheet-links [sheetid="${sheetId}"]`).addClass('active')
+    }
+
+    $$scope.closeSideFilterMenu = function(){
+        const push = _get($scope,'layout.props.sideNav.push',true)
+        $('.left-menu').removeClass('menu-open')
+        $$scope.menuIsOpen = false
+        push && $('#qs-page-container, .qs-header').removeClass('menu-open push')
+
+        setTimeout(()=>{
+            qlik.resize()
+        },320)
+
+    }
+
+    $$scope.openSideFilterMenu = function(){
+        const push = _get($scope,'layout.props.sideNav.push',true)
+        $('.left-menu').addClass('menu-open')
+        $$scope.menuIsOpen = true
+        setActiveSheet()
+        push && $('#qs-page-container, .qs-header').addClass('menu-open push')
+
+        setTimeout(()=>{
+            qlik.resize()
+        },320)
+
+    }
+    
+    if (!window.$snscope) {
     
         var object = $('#single-object').length && $('#single-object') || $('.qv-panel-wrap')
         object.prepend($compile(topMenuTemplate)($$scope))
@@ -50,8 +88,8 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
 
             $('.qs-header').toggle()
             qlikTopToolbarVisible = !qlikTopToolbarVisible
-            if (qlikTopToolbarVisible) $('.qv-panel').addClass('qlik-toolbar-visible')
-            else $('.qv-panel').removeClass('qlik-toolbar-visible')
+            if (qlikTopToolbarVisible) $('body, .qv-panel').addClass('qlik-toolbar-visible')
+            else $('body, .qv-panel').removeClass('qlik-toolbar-visible')
 
         }
 
@@ -61,53 +99,18 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
             $$scope.qlikNavigation.setMode(targetMode)
         }
 
-        function setActiveSheet(sheetId) {
-            $('#sheet-links .item.active').removeClass('active')
-            if (!sheetId) sheetId = $$scope.activeSheetId()
-            $(`#sheet-links [sheetid="${sheetId}"]`).addClass('active')
-        }
 
-        $$scope.closeSideFilterMenu = function(){
-            const push = _get($scope,'layout.props.sideNav.push',true)
-            $('.left-menu').removeClass('menu-open')
-            $$scope.menuIsOpen = false
-            push && $('#qs-page-container, .qs-header').removeClass('menu-open push')
-
-            setTimeout(()=>{
-                qlik.resize()
-            },320)
-
-        }
-
-        $$scope.openSideFilterMenu = function(){
-            const push = _get($scope,'layout.props.sideNav.push',true)
-            $('.left-menu').addClass('menu-open')
-            $$scope.menuIsOpen = true
-            setActiveSheet()
-            push && $('#qs-page-container, .qs-header').addClass('menu-open push')
-
-            setTimeout(()=>{
-                qlik.resize()
-            },320)
-
-        }
         
 
-        $$scope.toggleSideFilterMenu = function () {
-            if ($$scope.menuIsOpen) $$scope.closeSideFilterMenu()
-            else $$scope.openSideFilterMenu()
-        }
-
-        $timeout(()=>{
-            // $$scope.toggleSideFilterMenu()
-            if($$scope.appIsPublished) {
-                $$scope.toggleQlikHeaderMenu()
-            }
-        })
+        // $timeout(()=>{
+        //     if($$scope.appIsPublished) {
+        //         // $$scope.toggleQlikHeaderMenu()
+        //     }
+        // })
 
         let activeSheetIdChecked = false;
 
-        $$scope.$root.$watch(function(){ return snscope.$root.activeSheetId() }, async (_new,_old)=>{
+        $$scope.$root.$watch(function(){ return $element.scope() && $element.scope().$root.activeSheetId() }, async (_new,_old)=>{
             if (!activeSheetIdChecked){
                 try {
                     await app.variable.getByName('vActiveSheetId')
@@ -129,7 +132,10 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
 
         var sheetScope = $('.qvt-sheet').scope()
 
-        sheetScope.$watchCollection('currentSheet.layout',(layout)=>{
+        $$scope.$watchCollection(()=>{ 
+            try { return $('.qvt-sheet').scope().currentSheet.layout }
+            catch (err) { return null }
+        },(layout)=>{
             if (!layout || !layout.cells) return
             const hasNav = layout.cells.filter((e)=>{ return e.type == 'superNav'}).length > 0
             if (!hasNav) hideExtension()
@@ -138,12 +144,13 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
         $$scope.$watch(()=>{ return window.location.href  },(href,o)=>{
             if (!window.location.href.includes('sheet')) {
                 hideExtension()
+                $$scope.closeSideFilterMenu()
                 return
             }
         })
     
     }
-        
+            
     $('.qv-object-supernav-extension').show()
 
     $$scope.qlikObjects = {}

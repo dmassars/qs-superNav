@@ -6,6 +6,19 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 
 $left-nav-width: 15rem;
 
+body.supernav-extension-active.qv-global-selections-enabled {
+
+  &.qlik-toolbar-visible .qv-global-selections.toolbar {
+    top: 122.5px !important;
+    height: calc(100% - 122.5px) !important;
+  }
+
+  &:not(.qlik-toolbar-visible) .qv-global-selections.toolbar {
+    top: 80.5px !important;
+    height: calc(100% - 80.5px) !important;
+  }
+}
+
 .qv-object-superNav {
   &.qv-mode-edit .message {
     color: #202a53;
