@@ -242,7 +242,7 @@ function setActiveSheet(sheetId){
 export const component = async ($element, layout, isHot) => {
 
   var scope = $element.scope()
-  var $scope = _scope;
+  var $scope = scope.$root;//_scope;
 
   $scope.topNav = layout.props.topNav
   $scope.sideNav = layout.props.sideNav

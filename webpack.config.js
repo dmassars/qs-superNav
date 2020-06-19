@@ -6,31 +6,24 @@ const WebpackDiskPlugin = require('webpack-disk-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
 
-
-const axios = require("axios");
-const https = require('https')
-const fs = require('fs')
-
-const {last} = require('lodash')
-const watch = require('node-watch');
 _err = null;
 
-
-// node --inspect ".\node_modules\webpack-dev-server\bin\webpack-dev-server.js" --env.PORT=8086 --env.development --env.build_output=build --progress
+const $env = require('./.env.js')
 
 module.exports = (env = {}) => {
-
-    const NAME = 'superNav'//path.basename(__dirname);
-    const CWD = process.cwd()
-    const BUILD_OUTPUT = env.build_output || 'build';
-    const BUILD_DIR = path.resolve(BUILD_OUTPUT) // || path.resolve(CWD, 'build')
-    const SRC_DIR = path.resolve(CWD, 'src')
-
     const PRODUCTION = env.production === true 
     const ENV = PRODUCTION ? 'production' : 'development'
-    const ZIP_FILE = `${NAME}.zip`
-    const PORT = 8086
 
+    const $env = require('./.env.js')[ENV] || {}
+
+    const NAME = $env.ext_name
+    const CWD = process.cwd()
+    const BUILD_OUTPUT = env.build_output || $env.build_output || 'build';
+    const BUILD_DIR = path.resolve(BUILD_OUTPUT)
+    const SRC_DIR = path.resolve(CWD, 'src')
+
+    const ZIP_FILE = `${NAME}.zip`
+    const PORT =  env.PORT || $env.port || 8086;
 
     let config = {
         target: 'web',
@@ -167,6 +160,7 @@ module.exports = (env = {}) => {
                 errors: true,
                 warnings: false,
             },
+            disableHostCheck: true
         }
     }
 

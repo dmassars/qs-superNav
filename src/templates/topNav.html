@@ -6,20 +6,19 @@
                 aria-hidden="true"></span> 
             {{topNav.label}}
         </div>
-            <div style="width: 70%; display: flex">
-
-                <div ng-repeat="link in sections.top track by link.cId" ng-if="link.$show" class="item ui sheet-link"
-                    ng-class="{active: activeSheetId() == link.selectedSheet, dropdown: link.isDropdown }" ng-click="link.go()"
-                    sheetid="{{link.selectedSheet}}" id="{{link.cId}}"  ng-init="link.children.length && initializeDropdown(link.cId)" >{{link.label}}
-                    
-                    <div class="menu">
-                        <a ng-repeat="linkChild in link.children track by linkChild.cId" ng-if="linkChild.$show" class="item ui sheet-link"
-                        ng-class="{active: activeSheetId() == linkChild.selectedSheet  || link.isActiveSheet, dropdown: linkChild.isDropdown }" ng-click="linkChild.go()"
-                        sheetid="{{linkChild.selectedSheet}}" id="{{linkChild.cId}}">{{linkChild.label}}</a>
-                    </div>
-
+        <div style="width: 70%; display: flex">
+            <div ng-repeat="link in sections.top track by link.cId" ng-if="link.$show" class="item ui sheet-link"
+                ng-class="{active: activeSheetId() == link.selectedSheet, dropdown: link.isDropdown }" ng-click="link.go()"
+                sheetid="{{link.selectedSheet}}" id="{{link.cId}}"  ng-init="link.children.length && initializeDropdown(link.cId)" >{{link.label}}
+                
+                <div class="menu">
+                    <a ng-repeat="linkChild in link.children track by linkChild.cId" ng-if="linkChild.$show" class="item ui sheet-link"
+                    ng-class="{active: activeSheetId() == linkChild.selectedSheet  || link.isActiveSheet, dropdown: linkChild.isDropdown }" ng-click="linkChild.go()"
+                    sheetid="{{linkChild.selectedSheet}}" id="{{linkChild.cId}}">{{linkChild.label}}</a>
                 </div>
+
             </div>
+        </div>
         <div class="right menu">
             <div class="item" ng-if="qlikNavigation.isModeAllowed('edit') && !appIsPublished" ng-click="toggleEditMode()" ng-class="{active: qlikNavigation.getMode() == 'edit'}" style="padding: 0px">
                 Edit
@@ -29,4 +28,23 @@
             </div>
         </div>
     </div>
-</div>
+
+    <div class="slide-menu left-menu ui small vertical menu" id="{{layout.qInfo.qId}}" ng-style="menuStyle">
+        <div style="height: 92%; overflow-y: scroll;">
+            <div class="header item" ng-if="sideNav.label.length">{{sideNav.label}}</div>
+            <div ng-repeat="section in sections.left track by section.cId" id="{{section.cId}}" class="menu" style="width: 100%" ng-class="section.$class">
+                <div class="header item" ng-if="section.showSectionHeader" ><span>{{section.label}}</div>
+                <a ng-if="section.linkType=='text'" class="item" ng-repeat="item in section.$items track by item.cId" id="{{item.cId}}" ng-class="item.$class" ng-click="item.go()">{{item.label}}</a>
+
+                <div class="item" ng-class="[section.sectionType]" ng-if="section.linkType=='buttonGroup' || section.sectionType=='qlikobject'">
+                    <div class="ui mini buttons nav-button-group" ng-if="section.linkType=='buttonGroup'" ng-class="section.$buttonClass" ng-style="section.$style">
+                        <div class="ui button mini" ng-repeat="item in section.$items track by item.cId" id="{{item.cId}}" ng-class="item.$class" ng-click="item.go()">{{item.label}}</div>
+                    </div>
+                    <div id="menu-{{section.$objectId}}" ng-if="section.sectionType=='qlikobject'" style="height: 100px"  class="qlik-object" ng-style="section.$style"></div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+</div>7462178
