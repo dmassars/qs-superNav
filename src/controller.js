@@ -31,7 +31,7 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
     $('body').addClass('supernav-extension-active qlik-toolbar-visible')
 
     function hideExtension(){
-        $('.qv-panel, .qs-header').removeClass('menu-open push')
+        $('.qv-panel, [data-testid="qs-sub-toolbar"], .qs-header').removeClass('menu-open push')
         $$scope.closeSideFilterMenu()
         $('body').removeClass('supernav-extension-active')
         $('.qv-object-supernav-extension').hide()
@@ -53,7 +53,7 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
         const push = _get($scope,'layout.props.sideNav.push',true)
         $('.left-menu').removeClass('menu-open')
         $$scope.menuIsOpen = false
-        push && $('#qs-page-container, .qs-header').removeClass('menu-open push')
+        push && $('#qs-page-container, [data-testid="qs-sub-toolbar"], .qs-header').removeClass('menu-open push')
 
         setTimeout(()=>{
             qlik.resize()
@@ -66,7 +66,7 @@ export const controller = function($rootScope, $scope, $element, $timeout, $comp
         $('.left-menu').addClass('menu-open')
         $$scope.menuIsOpen = true
         setActiveSheet()
-        push && $('#qs-page-container, .qs-header').addClass('menu-open push')
+        push && $('#qs-page-container, [data-testid="qs-sub-toolbar"], .qs-header').addClass('menu-open push')
 
         setTimeout(()=>{
             qlik.resize()
